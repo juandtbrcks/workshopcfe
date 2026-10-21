@@ -40,6 +40,16 @@ PGPORT = int(os.environ.get("PGPORT", "5432"))
 PGDATABASE = os.environ.get("PGDATABASE", "databricks_postgres")
 PGUSER = os.environ.get("PGUSER", "")
 
+# ── Obras catalog (synced table or legacy view) ───────────────
+OBRAS_SCHEMA = os.environ.get("OBRAS_SCHEMA", "")
+OBRAS_TABLE = os.environ.get("OBRAS_TABLE", "")
+if OBRAS_TABLE:
+    _OBRAS_REF = f'"{ OBRAS_SCHEMA or "default" }"."{OBRAS_TABLE}"'
+    _OBRAS_ID, _OBRAS_NAME = '"IdObra"', '"NombreObra"'
+else:
+    _OBRAS_REF = "public.obras_catalogo"
+    _OBRAS_ID, _OBRAS_NAME = "id_obra", "nombre_obra"
+
 
 def pg_conn():
     """Fresh connection with a new OAuth token (tokens expire ~1h)."""
@@ -125,7 +135,7 @@ def obra_opts():
     try:
         ensure_pg_tables()
         rows = pg_sql(
-            "SELECT id_obra, nombre_obra FROM obras_catalogo ORDER BY id_obra"
+            f"SELECT {_OBRAS_ID}, {_OBRAS_NAME} FROM {_OBRAS_REF} ORDER BY {_OBRAS_ID}"
         )
         return "\n".join(
             f'<option value="{r[0]}">{r[0]} - {html_mod.escape(str(r[1]))}</option>'
@@ -140,7 +150,7 @@ def get_nombre_obra(id_obra):
     try:
         ensure_pg_tables()
         rows = pg_sql(
-            "SELECT nombre_obra FROM obras_catalogo WHERE id_obra = %s LIMIT 1",
+            f"SELECT {_OBRAS_NAME} FROM {_OBRAS_REF} WHERE {_OBRAS_ID} = %s LIMIT 1",
             (int(id_obra),),
         )
         return rows[0][0] if rows else "Desconocida"
