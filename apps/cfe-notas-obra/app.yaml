@@ -4,9 +4,9 @@ command:
 
 env:
   - name: LAKEBASE_ENDPOINT
-    value: "projects/<tu-proyecto>/branches/production/endpoints/primary"
+    value: "projects/testjuan/branches/production/endpoints/primary"
   - name: PGHOST
-    value: "<host-del-paso-1>"
+    value: "ep-odd-flower-eb4wks46.database.southcentralus.azuredatabricks.net"
   - name: PGPORT
     value: "5432"
   - name: PGDATABASE
