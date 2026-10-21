@@ -28,6 +28,7 @@ Usuario → App (app_v3.py) → Lakebase Postgres
 * `app_v3.py` — servidor HTTP en Python puro
 * `app.yaml` — comando de arranque, variables de entorno y recurso Lakebase
 * `requirements.txt` — `psycopg[binary]`, `databricks-sql-connector`, `databricks-sdk`
+* `despliegue_app_lakebase` — guia de despliegue desde la interfaz (una sola celda de codigo)
 * `sync_lakebase_to_delta` — notebook que copia las tablas de Lakebase a Delta (programable como Job)
 
 ## Valores especificos del workspace (ajustar en `app.yaml` y en el notebook de sync)
@@ -41,9 +42,13 @@ Usuario → App (app_v3.py) → Lakebase Postgres
 | `resources.postgres.branch` | Branch de Lakebase ligado como recurso | `projects/lakebaseworkshop/branches/production` |
 
 ## Pasos para desplegar
+> **Forma recomendada:** seguir el notebook `despliegue_app_lakebase` de esta carpeta. Guia paso a paso desde la
+> interfaz (proyecto Lakebase, app, recurso, permisos, `app.yaml`, deploy y job de sync); solo la carga de
+> `obras_catalogo` usa una celda de codigo.
+
 1. **Lakebase**: tener un proyecto de Lakebase con su branch `production` (en este workspace: `lakebaseworkshop`).
-2. **Crear la app** en Databricks Apps y ligar el branch como recurso (`lakebase-db`, permiso `CAN_CONNECT_AND_CREATE`).
-   Esto crea el rol Postgres del service principal de la app.
+2. **Crear la app** en Databricks Apps y crear en Lakebase un rol Postgres de tipo `SERVICE_PRINCIPAL` con el
+   client ID del service principal de la app; darle `USAGE, CREATE` en el esquema `public`.
 3. **Catalogo de obras**: cargar la tabla `obras_catalogo (id_obra, nombre_obra)` en Lakebase a partir de
    `tbobras` o `gold_fact_obras` (prerequisito: la app solo la lee).
 4. **Ajustar `app.yaml`** con los valores de tu workspace (tabla anterior).
