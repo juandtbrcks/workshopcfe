@@ -42,7 +42,7 @@ Usuario → App (app_v3.py) → Lakebase Postgres
 | `resources.postgres.branch` | Branch de Lakebase ligado como recurso | `projects/lakebaseworkshop/branches/production` |
 
 ## Pasos para desplegar
-> **Forma recomendada:** seguir el notebook `despliegue_app_lakebase` de esta carpeta. Guia paso a paso desde la
+> **Forma recomendada:** seguir el lab `notebooks/06_app_notas_obra_lakebase` del repo. Guia paso a paso desde la
 > interfaz (proyecto Lakebase, app, recurso, permisos, `app.yaml`, deploy y job de sync); solo la carga de
 > `obras_catalogo` usa una celda de codigo.
 
@@ -55,6 +55,3 @@ Usuario → App (app_v3.py) → Lakebase Postgres
 5. **Desplegar** desde la carpeta de este repo:
    `databricks apps deploy <nombre-app> --source-code-path /Workspace/<ruta>/workshopcfe/apps/cfe-notas-obra`
 6. **Analitica (opcional)**: programar `sync_lakebase_to_delta` como Job para tener las notas en Delta.
-
-## Version alternativa
-Si no hay Lakebase disponible, ver `../cfe-notas-obra-lh` (misma funcionalidad, solo Delta + SQL Warehouse).
