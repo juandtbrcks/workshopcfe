@@ -1,0 +1,23 @@
+command:
+  - python
+  - app_v3.py
+
+env:
+  - name: DATABRICKS_WAREHOUSE_ID
+    value: "13ccaff5dbf9dd2f"
+  - name: LAKEBASE_ENDPOINT
+    value: "projects/lakebaseworkshop/branches/production/endpoints/primary"
+  - name: PGHOST
+    value: "ep-lively-mountain-eb5kgl2c.database.southcentralus.azuredatabricks.net"
+  - name: PGPORT
+    value: "5432"
+  - name: PGDATABASE
+    value: "databricks_postgres"
+  - name: PGUSER
+    value: "a4b54d8f-d30b-46b2-92f4-07cc332bf8d1"
+
+resources:
+  - name: lakebase-db
+    postgres:
+      branch: projects/lakebaseworkshop/branches/production
+      permission: CAN_CONNECT_AND_CREATE
