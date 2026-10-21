@@ -12,8 +12,8 @@ env:
   - name: PGDATABASE
     value: "databricks_postgres"
   - name: PGUSER
-    value: "<CLIENT_ID-de-la-app-del-paso-2>"
+    value: "38f0ae0e-fb97-4d75-a1f0-5a8fb72f7439"
   - name: OBRAS_SCHEMA
     value: "default"
   - name: OBRAS_TABLE
-    value: "<nombre-de-tu-synced-table-del-paso-4>"
+    value: "gold_fact_obras_sync"
